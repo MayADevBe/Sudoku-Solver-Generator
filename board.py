@@ -1,5 +1,4 @@
 import tkinter as tk
-from math import floor
 
 class Board:
     '''Creates GUI Board'''
@@ -12,10 +11,6 @@ class Board:
         self.number = 0
         self.platform = tk.Canvas(self.window, width = 9*width, height = 9*width)
         self.platform.pack()
-        self.platform.bind("<Key>", self.key)
-        self.platform.bind("<Button-1>", self.assign)
-        self.platform.bind("<space>", self.start_new_game)
-        self.platform.focus_set()
 
     def draw(self):
         self.field = []
@@ -51,29 +46,3 @@ class Board:
 
     def start(self):
         self.window.mainloop()
-
-    def key(self, event):
-        #print(repr(event.char))
-        try:
-            self.number = int(event.char)
-        except:
-            print("It has to be a number!") 
-
-    def assign(self, event):
-        if not self.number == 0:
-            x = floor(event.x/W_H)
-            y = floor(event.y/W_H)
-            if not self.field[x][y] == 0:
-                self.redraw()
-            self.field[x][y] = self.number
-            self.draw_field("black")
-            self.number = 0
-
-    def start_new_game(self, event=None):
-        self.number = 0
-        self.draw()
-
-W_H = 50
-board = Board("Sudoku", W_H)
-board.draw()
-board.start()
