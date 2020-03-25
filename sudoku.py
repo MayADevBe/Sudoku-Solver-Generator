@@ -1,8 +1,10 @@
 from math import floor
 import threading
 import time
+import copy
 from board import Board
 from solver import SudokuSolver
+import generate
 
 W_H = 50
 solveable = None
@@ -58,21 +60,23 @@ def check_if_finished():
         board.draw_field("green")
 
 def key(event):
-    #print(repr(event.char))
+    global board
     try:
         board.number = int(event.char)
     except:
         print("It has to be a number!")
 
 def assign(event):
+    global board
     x = floor(event.x/W_H)
     y = floor(event.y/W_H)
-    if not board.field[x][y] == 0:
-        board.redraw()
-    board.field[x][y] = board.number
-    board.draw_field("black")
-    board.number = 0
-    is_valid()
+    if board.starting_field[x][y] == 0:
+        if not board.field[x][y] == 0:
+            board.redraw()
+        board.field[x][y] = board.number
+        board.draw_field("grey64")
+        board.number = 0
+        is_valid()
 
 def solver_thread():
     global solveable, solver
@@ -88,28 +92,30 @@ def solve(event=None):
 
     while solveable == None:
         board.redraw()
-        board.draw_field("black")
+        board.draw_field("SlateBlue3")
 
         board.platform.update()
         time.sleep(0.01)
 
     if solveable == True:
-        board.draw_field("green")
+        board.draw_field("green3")
     else:
         board.draw_field("red")
 
     board.platform.update()
 
 def start_new_game(event=None):
+    global board, solveable
+    solveable = None
     board.number = 0
     board.draw()
 
 board = Board("Sudoku", W_H)
-board.draw()
-field = [[3, 0, 6, 5, 0, 8, 4, 0, 0], [5, 2, 0, 0, 0, 0, 0, 0, 0], [0, 8, 7, 0, 0, 0, 0, 3, 1], [0, 0, 3, 0, 1, 0, 0, 8, 0], [9, 0, 0, 8, 6, 3, 0, 0, 5], [0, 5, 0, 0, 9, 0, 6, 0, 0], [1, 3, 0, 0, 0, 0, 2, 5, 0], [0, 0, 0, 0, 0, 0, 0, 7, 4], [0, 0, 5, 2, 0, 6, 3, 0, 0]]
+board.redraw()
+field = generate.get_random_field()
 board.field = field
-board.draw_field("black")
-
+board.starting_field = copy.deepcopy(field)
+board.draw_field("grey")
 board.platform.bind("<Key>", key)
 board.platform.bind("<Button-1>", assign)
 board.platform.bind("<space>", start_new_game)

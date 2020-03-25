@@ -22,7 +22,7 @@ def load_fields():
 def get_random_field():
     fields = load_fields()
     if len(fields) > 0:
-        r = random.randint(0, len(fields))
+        r = random.randint(0, len(fields)-1)
         return fields[r]
     else:
         return generate_field()

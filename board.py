@@ -8,6 +8,7 @@ class Board:
         self.window.title(title)
         self.width = width
         self.field = []
+        self.starting_field = []
         self.number = 0
         self.platform = tk.Canvas(self.window, width = 9*width, height = 9*width)
         self.platform.pack()
@@ -35,8 +36,10 @@ class Board:
         rndfont = 25
         for i in range(9):
             for j in range(9):
-                if not (self.field[i][j] == 0):
-                    self.platform.create_text((self.width/2)*((i*2)+1), (self.width/2)*((j*2)+1), text=self.field[i][j], font=('Pursia', rndfont), anchor="center", fill=color, tag=self.field[i][j])
+                if not (self.starting_field[i][j] == 0):
+                    self.platform.create_text((self.width/2)*((i*2)+1), (self.width/2)*((j*2)+1), text=self.starting_field[i][j], font=('Pursia', rndfont), anchor="center", fill="black", tag=self.starting_field)
+                elif not (self.field[i][j] == 0):
+                    self.platform.create_text((self.width/2)*((i*2)+1), (self.width/2)*((j*2)+1), text=self.field[i][j], font=('Pursia', rndfont), anchor="center", fill=color, tag=self.field[i][j])             
 
     def color(self, coordinate_list, color):
         rndfont = 25

@@ -1,6 +1,6 @@
 # Sudoku
- Sudoku Game and Solver (Baktracking)
+ Sudoku Game and Solver (Backtracking)
 
-* space for new Game
-* Enter to Solve
+* press space for new Game
+* press enter to Solve
 * press number and click on field to assign
