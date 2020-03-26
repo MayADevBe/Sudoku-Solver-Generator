@@ -55,8 +55,7 @@ class SudokuSolver:
                             #Check that this value has not already be used on this 3x3 square
                             if not value in (square[0] + square[1] + square[2]):
                                 field[row][col]=value
-                                if not generate:
-                                    time.sleep(0.01)     
+                                time.sleep(0.01)     
                                 if self.check_if_finished(field):
                                     # for generate to check if unique solution
                                     if generate and self.counter <= 1:

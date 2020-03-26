@@ -1,8 +1,10 @@
 # Sudoku
- Sudoku Game and Solver (Backtracking)
+ Sudoku Game, Solver (Backtracking) and Generator Visualisation
+
+run sudoku.py
 
 * press l to load random sudoku
-* press g to generate new unique sudoku
+* press g to generate new sudoku with unique solution
 * press space for new Game
 * press enter to Solve
-* press number and click on field to assign
+* press number and then click on field to assign value

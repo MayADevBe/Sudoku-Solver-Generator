@@ -56,13 +56,12 @@ def generate_field(board):
         value = board.field[row][col] #backup value
         board.field[row][col] = 0
 
-        copy_field = deepcopy(board.field) #TODO change? - understand what is goal
+        copy_field = deepcopy(board.field)
         solver.counter = 0
         solver.solve_soduku(generate=True, field=copy_field)
         if solver.counter != 1:
             board.field[row][col] = value
             attempts -= 1
-            print("Attempt down")
 
     board.starting_field = deepcopy(board.field)
     save_field(board.starting_field)
