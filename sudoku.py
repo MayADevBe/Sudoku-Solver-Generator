@@ -8,8 +8,10 @@ import generate
 
 W_H = 50
 solveable = None
+generated = False
 
 def is_valid():
+    #check if board is valid and color board
     global board
     valid = True
     coordinates = []
@@ -48,8 +50,10 @@ def is_valid():
         board.color(coordinates, 'red')
     else:
         check_if_finished()
+    print("valid", valid)
 
 def check_if_finished():
+    # check if board is full and color board
     global board
     finished = True
     for i in range(9):
@@ -90,6 +94,7 @@ def solve(event=None):
     t.daemon = True
     t.start()
 
+    #animate backtracking
     while solveable == None:
         board.redraw()
         board.draw_field("SlateBlue3")
@@ -108,17 +113,52 @@ def start_new_game(event=None):
     global board, solveable
     solveable = None
     board.number = 0
+    board.starting_field = []
     board.draw()
 
+def generate_thread():
+    global board, generated
+    generated = generate.generate_field(board)
+
+def generate_new(event=None):
+    global board, generated
+    if board.starting_field == []:
+        board.starting_field = []
+        for i in range(9):
+            board.starting_field.append([])
+            for j in range(9):
+                board.starting_field[i].append(0)
+                
+        t = threading.Thread(target=generate_thread)
+        t.daemon = True
+        t.start()
+
+        while generated == False:
+            board.redraw()
+            board.draw_field("orange")
+
+            board.platform.update()
+            time.sleep(0.01)
+
+        board.redraw()
+        board.draw_field("black")
+        board.platform.update()
+
+def load_sudoku(event=None):
+    global board
+    if board.starting_field == []:
+        field = generate.get_random_field()
+        board.field = field
+        board.starting_field = copy.deepcopy(field)
+        board.draw_field("grey")
+
 board = Board("Sudoku", W_H)
-board.redraw()
-field = generate.get_random_field()
-board.field = field
-board.starting_field = copy.deepcopy(field)
-board.draw_field("grey")
+board.draw()
 board.platform.bind("<Key>", key)
 board.platform.bind("<Button-1>", assign)
 board.platform.bind("<space>", start_new_game)
 board.platform.bind("<Return>", solve)
+board.platform.bind("l", load_sudoku)
+board.platform.bind("g", generate_new)
 board.platform.focus_set()
 board.start()
