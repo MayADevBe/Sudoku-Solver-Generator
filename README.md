@@ -1,8 +1,6 @@
 # Sudoku
  Sudoku Game, Solver (Backtracking) and Generator Visualisation
 
-run sudoku.py
-
 * press l to load random sudoku
 * press g to generate new sudoku with unique solution
 * press space for new Game
