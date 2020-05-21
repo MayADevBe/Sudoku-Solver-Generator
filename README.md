@@ -1,5 +1,8 @@
 # Sudoku
- Sudoku Game
+ Sudoku Game, Solver (Backtracking) and Generator Visualisation
 
-* press number, then click on field to assign
-* click on field to empty
+* press l to load random sudoku
+* press g to generate new sudoku with unique solution
+* press space for new Game
+* press enter to Solve
+* press number and then click on field to assign value
